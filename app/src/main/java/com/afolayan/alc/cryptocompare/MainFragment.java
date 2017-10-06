@@ -4,13 +4,30 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
+import com.afolayan.alc.cryptocompare.model.Currency;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class MainFragment extends Fragment {
 
+    public static final String TAG = MainFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -18,6 +35,12 @@ public class MainFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    @Bind(R.id.currency_list)
+    RecyclerView currencyRecyclerView;
+
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     public MainFragment() {
         // Required empty public constructor
@@ -44,7 +67,38 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, view);
+        refreshViews();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshViews();
+            }
+        });
+        Currency currency = new Currency();
+        List<Currency> mList = currency.getCurrencies(getActivity());
+
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getActivity(), OrientationHelper.HORIZONTAL, false);
+
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(mList);
+        currencyRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        //currencyRecyclerView.setLayoutManager( linearLayoutManager );
+        currencyRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 2));
+
+        currencyRecyclerView.setAdapter(recyclerAdapter);
+
+        return view;
+    }
+
+    private void refreshViews() {
+        // get updated values
+        // parse values
+        // present updates
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -71,7 +125,7 @@ public class MainFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

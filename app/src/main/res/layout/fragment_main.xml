@@ -2,12 +2,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="30dp"
     tools:context="com.afolayan.alc.cryptocompare.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <!--<include layout="@layout/layout_plus"/>-->
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_currency"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerInParent="true"
+            android:text="@string/no_currency_yet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_margin="10dp"
+                android:id="@+id/currency_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 </FrameLayout>
