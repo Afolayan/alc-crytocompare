@@ -10,11 +10,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
 import com.afolayan.alc.cryptocompare.model.Currency;
@@ -35,7 +33,7 @@ public class MainFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    @Bind(R.id.currency_list)
+    @Bind(R.id.currency_recycler)
     RecyclerView currencyRecyclerView;
 
     @Bind(R.id.swipeRefreshLayout)

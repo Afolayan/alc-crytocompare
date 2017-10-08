@@ -52,7 +52,6 @@ public class Currency {
         Gson gson = new Gson();
         try {
             JsonReader reader = gson.newJsonReader(new InputStreamReader(is, "UTF-8"));
-            Log.e(TAG, "getCurrencies: reader == "+reader.toString());
             return gson.fromJson( reader, new TypeToken<List<Currency>>(){}.getType());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
