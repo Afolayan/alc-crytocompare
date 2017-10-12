@@ -72,8 +72,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void doAddCard() {
-        Currency currency = new Currency();
-        final List<Currency> mList = currency.getCurrencies(this);
+        final List<Currency> mList = Currency.getCurrencies(this);
 
         final NewCurrencyAdapter currencyAdapter =
                 new NewCurrencyAdapter(this, R.layout.layout_currency_list_item, mList);
@@ -123,14 +122,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getCurrencyBitcoin(String currencyCode) {
-        ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleSmall);
+        View dialogView = getLayoutInflater().inflate(R.layout.layout_progress_dialog, null);
+        ProgressBar progressBar = (ProgressBar) dialogView.findViewById(R.id.progress_bar);
 
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this)
+                .setView(dialogView);
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
         APIController controller = new APIController();
-        controller.start(currencyCode);
-
-    }
-
-    private void parseAndSaveCurrencyDetails(String responseJson){
+        controller.start(currencyCode, alertDialog);
 
     }
 

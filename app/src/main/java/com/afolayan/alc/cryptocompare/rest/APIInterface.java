@@ -1,7 +1,5 @@
 package com.afolayan.alc.cryptocompare.rest;
 
-import com.afolayan.alc.cryptocompare.model.CurrencyResponse;
-
 import java.util.Map;
 
 import retrofit2.Call;
@@ -15,6 +13,6 @@ import retrofit2.http.QueryMap;
 public interface APIInterface {
 
     @GET("pricemultifull")
-    Call<String> getCurentDetails(@QueryMap Map<String, String> queries);
+    Call<String> getCurrencyDetails(@QueryMap Map<String, String> queries);
 
 }

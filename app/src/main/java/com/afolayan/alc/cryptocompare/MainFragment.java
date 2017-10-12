@@ -10,27 +10,32 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
+import com.afolayan.alc.cryptocompare.db.CurrencyRealmController;
+import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
+import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
 
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 
 public class MainFragment extends Fragment {
 
     public static final String TAG = MainFragment.class.getSimpleName();
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
     @Bind(R.id.currency_recycler)
@@ -38,6 +43,10 @@ public class MainFragment extends Fragment {
 
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private Realm realm;
+    private OrderedRealmCollectionChangeListener<RealmResults<CryptoList>> changeListener;
+    private RecyclerAdapter recyclerAdapter;
+    private RealmResults<CryptoList> mList;
 
 
     public MainFragment() {
@@ -47,8 +56,7 @@ public class MainFragment extends Fragment {
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,10 +64,17 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        realm = Realm.getDefaultInstance();
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mList.removeChangeListener(changeListener);
     }
 
     @Override
@@ -74,17 +89,24 @@ public class MainFragment extends Fragment {
                 refreshViews();
             }
         });
-        Currency currency = new Currency();
-        List<Currency> mList = currency.getCurrencies(getActivity());
+
+        mList = realm.where(CryptoList.class).findAll();
+        changeListener = new OrderedRealmCollectionChangeListener<RealmResults<CryptoList>>() {
+            @Override
+            public void onChange(RealmResults<CryptoList> collection, OrderedCollectionChangeSet changeSet) {
+                changeSet.getInsertions();
+                recyclerAdapter = new RecyclerAdapter(collection);
+            }
+        };
+        mList.addChangeListener(changeListener);
 
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(getActivity(), OrientationHelper.HORIZONTAL, false);
-
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(mList);
+        GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
+        recyclerAdapter = new RecyclerAdapter(mList);
         currencyRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //currencyRecyclerView.setLayoutManager( linearLayoutManager );
-        currencyRecyclerView.setLayoutManager( new GridLayoutManager(getActivity(), 2));
+        currencyRecyclerView.setLayoutManager( linearLayoutManager);
 
         currencyRecyclerView.setAdapter(recyclerAdapter);
 
@@ -126,4 +148,10 @@ public class MainFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        RealmResults<CryptoList> mList = realm.where(CryptoList.class).findAll();
+        recyclerAdapter = new RecyclerAdapter(mList);
+    }
 }

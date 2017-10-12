@@ -2,46 +2,192 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/single_currency_card"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp">
+    android:layout_gravity="center"
+    android:elevation="3dp"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
+                android:gravity="center_horizontal"
+                android:id="@+id/header_layout"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/txt_currency_name"
-                    android:textAllCaps="true"
-                    android:text="USD"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/txt_currency_code"
-                    android:textStyle="normal"
-                    android:text="US"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txt_currency_name"
+                        android:textAllCaps="true"
+                        android:text="USD"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_close_black_24dp"
+                        android:id="@+id/btn_remove_card"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                </RelativeLayout>
+
             </LinearLayout>
-            <ImageView
-                android:layout_margin="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/ic_close_black_24dp"
-                android:id="@+id/btn_remove_card"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+
+            <View
+                android:id="@+id/view_layout"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/header_layout"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:id="@+id/content_layout"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view_layout"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/currency_layout_1"
+                        android:gravity="start"
+                        android:orientation="vertical"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_crypo_name_1"
+                            android:textAllCaps="true"
+                            android:text="BTC"
+                            android:gravity="center_horizontal"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txt_price_1"
+                            android:text="399999"
+                            android:gravity="center_horizontal"
+                            android:textSize="20sp"
+                            android:textStyle="normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txt_market_1"
+                            android:text="CCAGG"
+                            android:gravity="center_horizontal"
+                            android:textSize="18sp"
+                            android:textStyle="normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/currency_layout_2"
+                        android:layout_toEndOf="@+id/currency_layout_1"
+                        android:layout_toRightOf="@+id/currency_layout_1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_crypo_name_2"
+                            android:textAllCaps="true"
+                            android:text="ETH"
+                            android:gravity="center_horizontal"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txt_price_2"
+                            android:text="145"
+                            android:gravity="center_horizontal"
+                            android:textSize="20sp"
+                            android:textStyle="normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txt_market_2"
+                            android:text="WSB"
+                            android:gravity="center_horizontal"
+                            android:textSize="18sp"
+                            android:textStyle="normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/second_view_layout"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/content_layout"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:id="@+id/footer_layout"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/second_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/txt_last_updated_text"
+                        android:text="Last Updated: "
+                        android:gravity="start"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/txt_last_updated"
+                        android:text="4 mins ago"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        android:layout_toRightOf="@+id/txt_last_updated_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    </RelativeLayout>
+            </LinearLayout>
+
         </RelativeLayout>
 </android.support.v7.widget.CardView>

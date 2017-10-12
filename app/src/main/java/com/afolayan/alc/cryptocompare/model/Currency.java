@@ -47,7 +47,7 @@ public class Currency {
         return code;
     }
 
-    public List<Currency> getCurrencies(Context context){
+    public static List<Currency> getCurrencies(Context context){
         InputStream is = context.getResources().openRawResource(R.raw.currencies);
         Gson gson = new Gson();
         try {
