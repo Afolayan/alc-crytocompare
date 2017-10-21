@@ -14,11 +14,13 @@
 
         <!--<include layout="@layout/layout_plus"/>-->
         <TextView
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/no_currency"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
             android:text="@string/no_currency_yet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

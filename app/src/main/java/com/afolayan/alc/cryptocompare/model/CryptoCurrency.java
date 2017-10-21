@@ -1,21 +1,6 @@
 package com.afolayan.alc.cryptocompare.model;
 
-
-import android.content.Context;
-
-import com.afolayan.alc.cryptocompare.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 
 /**
  * Created by Afolayan Oluwaseyi on 10/8/17.
@@ -29,6 +14,8 @@ public class CryptoCurrency extends RealmObject{
     String type;
     String fromSymbol; //ETH or BTC
     String toSymbol;  //NGN, USD, etc
+    String fromSymbolIcon;
+    String toSymbolIcon;
     String price;
     long lastUpdate;
 
@@ -89,6 +76,22 @@ public class CryptoCurrency extends RealmObject{
         this.lastUpdate = lastUpdate;
     }
 
+    public String getFromSymbolIcon() {
+        return fromSymbolIcon;
+    }
+
+    public void setFromSymbolIcon(String fromSymbolIcon) {
+        this.fromSymbolIcon = fromSymbolIcon;
+    }
+
+    public String getToSymbolIcon() {
+        return toSymbolIcon;
+    }
+
+    public void setToSymbolIcon(String toSymbolIcon) {
+        this.toSymbolIcon = toSymbolIcon;
+    }
+
     @Override
     public String toString() {
         return  "FROM: "+getFromSymbol()
@@ -107,6 +110,7 @@ public class CryptoCurrency extends RealmObject{
         cryptoCurrency.setPrice(thisCurrency.getPrice());
         cryptoCurrency.setLastUpdate(thisCurrency.getLastUpdate());
         cryptoCurrency.setLastmarket(thisCurrency.getLastMarket());
+        cryptoCurrency.setMarket(thisCurrency.getMarket());
         return cryptoCurrency;
     }
 }

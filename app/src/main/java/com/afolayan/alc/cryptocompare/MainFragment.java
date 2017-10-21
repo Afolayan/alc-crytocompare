@@ -1,6 +1,7 @@
 package com.afolayan.alc.cryptocompare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
 import com.afolayan.alc.cryptocompare.db.CurrencyRealmController;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
+import com.afolayan.alc.cryptocompare.rest.APIController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +34,7 @@ import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 
@@ -78,11 +83,11 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
-        refreshViews();
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -91,6 +96,11 @@ public class MainFragment extends Fragment {
         });
 
         mList = realm.where(CryptoList.class).findAll();
+        if( mList.size() == 0 )
+            view.findViewById(R.id.no_currency).setVisibility(View.VISIBLE);
+        else
+            view.findViewById(R.id.no_currency).setVisibility(View.GONE);
+
         changeListener = new OrderedRealmCollectionChangeListener<RealmResults<CryptoList>>() {
             @Override
             public void onChange(RealmResults<CryptoList> collection, OrderedCollectionChangeSet changeSet) {
@@ -101,7 +111,7 @@ public class MainFragment extends Fragment {
         mList.addChangeListener(changeListener);
 
         LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(getActivity(), OrientationHelper.HORIZONTAL, false);
+                new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         recyclerAdapter = new RecyclerAdapter(mList);
         currencyRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -110,15 +120,42 @@ public class MainFragment extends Fragment {
 
         currencyRecyclerView.setAdapter(recyclerAdapter);
 
+        recyclerAdapter.setOnCurrencyClicked(new RecyclerAdapter.OnCurrencyClicked() {
+            @Override
+            public void onCurrencyItemClicked(CryptoList currency) {
+                Intent intent = new Intent(getActivity(), ConverterActivity.class);
+                intent.putExtra("CRYPTO_ID", currency.getID());
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
     private void refreshViews() {
-        // get updated values
-        // parse values
-        // present updates
 
-        mSwipeRefreshLayout.setRefreshing(false);
+        if( mList.size() == 0 ) {
+            Toast.makeText(getActivity(), "Add a card before refreshing", Toast.LENGTH_SHORT).show();
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        List<String> addedCurrencies = new ArrayList<>();
+        List<String> addedCurrenciesIds = new ArrayList<>();
+
+        for( CryptoList cryptoList: mList){
+            RealmList<CryptoCurrency> currencies = cryptoList.getCryptoCurrencies();
+            addedCurrencies.add( currencies.get(0).getToSymbol());
+            addedCurrenciesIds.add( cryptoList.getID() );
+        }
+
+        if( addedCurrencies.size() != addedCurrenciesIds.size()) {
+            Toast.makeText(getActivity(), "Something happened. Cannot update data", Toast.LENGTH_SHORT).show();
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        APIController controller = new APIController();
+        controller.start(addedCurrencies, addedCurrenciesIds, mSwipeRefreshLayout);
+
     }
 
     public void onButtonPressed(Uri uri) {

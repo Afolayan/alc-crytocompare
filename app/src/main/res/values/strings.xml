@@ -4,4 +4,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="no_currency_yet">No Currency Added Yet</string>
+    <string name="title_activity_converter">Converter</string>
+    <string name="action_settings">Settings</string>
 </resources>
