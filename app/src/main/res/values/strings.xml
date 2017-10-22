@@ -6,4 +6,11 @@
     <string name="no_currency_yet">No Currency Added Yet</string>
     <string name="title_activity_converter">Converter</string>
     <string name="action_settings">Settings</string>
+    <string name="currency">Currency</string>
+    <string name="switcher">Switcher</string>
+    <string name="bitcoin">BitCoin</string>
+    <string name="ethereal">Ethereal</string>
+    <string name="last_updated">Last Updated: </string>
+    <string name="market">Market: </string>
+    <string name="value">Value</string>
 </resources>

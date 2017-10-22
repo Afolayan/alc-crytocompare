@@ -34,7 +34,7 @@ import io.realm.RealmList;
  * Created by Afolayan Oluwaseyi on 10/6/17.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
 
     private List<CryptoList> mList;
     public static final String TAG = RecyclerAdapter.class.getSimpleName();
@@ -102,8 +102,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         long lastUpdated = btc.getLastUpdate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, YYYY", Locale.UK);
-        Date date = new Date(lastUpdated);
-        String dateToDisplay = dateFormat.format(date);
+        String dateToDisplay = dateFormat.format( new Date(lastUpdated) );
 
         ((CurrencyHolder) holder).tvLastUpdated.setText(dateToDisplay);
 
@@ -111,7 +110,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCurrencyClicked.onCurrencyItemClicked(cryptoList);
+                getOnCurrencyClicked().onCurrencyItemClicked(cryptoList);
             }
         });
 
@@ -177,9 +176,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.where(CryptoList.class).equalTo("ID", Id)
-                            .findFirst()
-                            .deleteFromRealm();
+                    CryptoList cryptoList = realm.where(CryptoList.class).equalTo("ID", Id)
+                            .findFirst();
+                    if( cryptoList != null);
+                            cryptoList.deleteFromRealm();
                 }
             }, new Realm.Transaction.OnSuccess() {
                 @Override

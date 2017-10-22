@@ -11,13 +11,13 @@ public class CryptoCurrency extends RealmObject{
     private String market;
     private String lastmarket;
 
-    String type;
-    String fromSymbol; //ETH or BTC
-    String toSymbol;  //NGN, USD, etc
-    String fromSymbolIcon;
-    String toSymbolIcon;
-    String price;
-    long lastUpdate;
+    private String type;
+    private String fromSymbol; //ETH or BTC
+    private String toSymbol;  //NGN, USD, etc
+    private String fromSymbolIcon;
+    private String toSymbolIcon;
+    private String price;
+    private long lastUpdate;
 
     public String getMarket() {
         return market;
