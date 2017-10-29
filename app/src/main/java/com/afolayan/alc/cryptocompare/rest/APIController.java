@@ -1,7 +1,6 @@
 package com.afolayan.alc.cryptocompare.rest;
 
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -181,7 +179,7 @@ public class APIController implements Callback<String> {
             CryptoCurrency cryptoCurrency = makeCryptoObject(thisCurrency);
             cryptoCurrency.setFromSymbolIcon( displayResponse.getFromSymbol() );
             cryptoCurrency.setToSymbolIcon( displayResponse.getToSymbol() );
-
+            cryptoCurrency.setLastUpdate( System.currentTimeMillis() );
             value.add(cryptoCurrency);
         }
         if(!TextUtils.isEmpty(btcCurrencyObject)) {
@@ -190,6 +188,7 @@ public class APIController implements Callback<String> {
             CryptoCurrency cryptoCurrency = makeCryptoObject(thisCurrency);
             cryptoCurrency.setFromSymbolIcon( displayResponse.getFromSymbol() );
             cryptoCurrency.setToSymbolIcon( displayResponse.getToSymbol() );
+            cryptoCurrency.setLastUpdate( System.currentTimeMillis() );
 
             value.add(cryptoCurrency);
         }

@@ -1,34 +1,29 @@
 package com.afolayan.alc.cryptocompare.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afolayan.alc.cryptocompare.R;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmList;
+
+import static com.afolayan.alc.cryptocompare.helper.AppHelper.getDate;
 
 /**
  * Created by Afolayan Oluwaseyi on 10/6/17.
@@ -76,33 +71,39 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
         CryptoCurrency eth = currencies.first();
         CryptoCurrency btc = currencies.last();
 
-        String currencyName = eth.getToSymbolIcon()+" - "
-                +Currency.getCurrencyWithName(context, currencies.get(0)
-                .getToSymbol())
-                .getName();
+        Currency thisCurrency = Currency.getCurrencyWithName(context, currencies.get(0)
+                .getToSymbol());
+        String currencyName = null;
+        String currencySymbol = null;
+        if (thisCurrency != null) {
+            currencyName = thisCurrency.getName();
+            currencySymbol = thisCurrency.getSymbol();
+        }
+
         ((CurrencyHolder) holder).tvCurrencyName.setText(currencyName);
 
-        String cryptoName1 = eth.getFromSymbol() +"("+eth.getFromSymbolIcon()+")";
+        String cryptoName1 = eth.getFromSymbol() +" - "+eth.getToSymbol();
         ((CurrencyHolder) holder).tvCryptoName1.setText(cryptoName1);
 
-        String cryptoPrice1 = eth.getPrice();
+        String cryptoPrice1 = currencySymbol+ eth.getPrice();
         ((CurrencyHolder) holder).tvCryptoPrice1.setText(cryptoPrice1);
 
         String cryptoMarket1 = eth.getLastmarket();
         ((CurrencyHolder) holder).tvCryptoMarket1.setText(cryptoMarket1);
 
-        String cryptoName2 = btc.getFromSymbol() +"("+btc.getFromSymbolIcon()+")";
+        String cryptoName2 = btc.getFromSymbol() +" - "+btc.getToSymbol();
         ((CurrencyHolder) holder).tvCryptoName2.setText(cryptoName2);
 
-        String cryptoPrice2 = btc.getPrice();
+        String cryptoPrice2 = currencySymbol + btc.getPrice();
         ((CurrencyHolder) holder).tvCryptoPrice2.setText(cryptoPrice2);
 
         String cryptoMarket2 = btc.getLastmarket();
         ((CurrencyHolder) holder).tvCryptoMarket2.setText(cryptoMarket2);
 
         long lastUpdated = btc.getLastUpdate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, YYYY", Locale.UK);
-        String dateToDisplay = dateFormat.format( new Date(lastUpdated) );
+
+        Date dateUpdated = new Date(lastUpdated);
+        String dateToDisplay = getDate(dateUpdated);
 
         ((CurrencyHolder) holder).tvLastUpdated.setText(dateToDisplay);
 
@@ -117,7 +118,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
         ((CurrencyHolder) holder).imgRemoveCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCryptoCurrency(ID, position);
+                deleteCryptoCurrency(ID);
             }
         });
     }
@@ -171,7 +172,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
         }
     }
 
-    private void deleteCryptoCurrency(final String Id, final int position) {
+    private void deleteCryptoCurrency(final String Id) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
@@ -179,7 +180,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
                     CryptoList cryptoList = realm.where(CryptoList.class).equalTo("ID", Id)
                             .findFirst();
                     if( cryptoList != null);
-                            cryptoList.deleteFromRealm();
+                        cryptoList.deleteFromRealm();
                 }
             }, new Realm.Transaction.OnSuccess() {
                 @Override

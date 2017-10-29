@@ -2,20 +2,21 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/single_currency_card"
-    android:layout_gravity="center"
     android:elevation="3dp"
     android:layout_margin="10dp"
     android:padding="10dp"
-    android:layout_width="300dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:gravity="center_horizontal"
                 android:id="@+id/header_layout"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -50,8 +51,11 @@
 
             <View
                 android:id="@+id/view_layout"
+                android:background="@color/blue"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/header_layout"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_height="1dp"/>
 
             <LinearLayout
@@ -79,7 +83,7 @@
                         <TextView
                             android:id="@+id/txt_crypo_name_1"
                             android:textAllCaps="true"
-                            android:text="BTC"
+                            android:text="@string/btc"
                             android:gravity="center_horizontal"
                             android:textSize="22sp"
                             android:textStyle="bold"
@@ -154,8 +158,10 @@
 
             <View
                 android:id="@+id/second_view_layout"
+                android:background="@color/blue"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/content_layout"
+                android:layout_marginTop="5dp"
                 android:layout_height="1dp"/>
 
             <LinearLayout
@@ -167,25 +173,27 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:gravity="center_horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
                     <TextView
                         android:id="@+id/txt_last_updated_text"
-                        android:text="Last Updated: "
-                        android:gravity="start"
-                        android:textSize="16sp"
-                        android:textStyle="normal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Last Updated: "
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
                     <TextView
                         android:id="@+id/txt_last_updated"
-                        android:textSize="16sp"
-                        android:textStyle="normal"
-                        android:layout_toRightOf="@+id/txt_last_updated_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/txt_last_updated_text"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
             </LinearLayout>
 
         </RelativeLayout>

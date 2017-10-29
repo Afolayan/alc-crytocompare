@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.afolayan.alc.cryptocompare.ConverterFragment"
@@ -16,12 +17,12 @@
 
         <TextView
             android:id="@+id/tv_currency_name"
-            android:gravity="center"
-            android:fontFamily="sans-serif"
-            android:textStyle="normal"
-            android:textSize="22sp"
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"
+            android:fontFamily="@font/roboto_slab_light"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textStyle="normal" />
 
         <belka.us.androidtoggleswitch.widgets.ToggleSwitch
             android:layout_marginTop="@dimen/ten_dp"
@@ -30,11 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-       <!-- <TextView
-            android:id="@+id/tv_crypto_type"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />-->
+
         <TextView
             android:id="@+id/tv_last_market"
             android:gravity="center"
@@ -46,12 +43,12 @@
 
         <TextView
             android:id="@+id/tv_last_update"
-            android:gravity="center"
-            android:fontFamily="sans-serif"
-            android:textStyle="normal"
-            android:textSize="18sp"
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"
+            android:fontFamily="@font/roboto_slab_light"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="normal" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -82,6 +79,8 @@
                     android:paddingEnd="5dp"
                     android:gravity="center_vertical"
                     android:layout_width="30dp"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
                     android:layout_height="match_parent" />
 
                 <android.support.design.widget.TextInputLayout
@@ -122,6 +121,8 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="28sp"
                 android:layout_height="match_parent" />
 
                  <android.support.design.widget.TextInputLayout

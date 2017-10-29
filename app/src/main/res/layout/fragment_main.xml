@@ -7,8 +7,6 @@
 
     <RelativeLayout
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

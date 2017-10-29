@@ -11,31 +11,28 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
-import com.afolayan.alc.cryptocompare.db.CurrencyRealmController;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
-import com.afolayan.alc.cryptocompare.model.Currency;
 import com.afolayan.alc.cryptocompare.rest.APIController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmList;
 import io.realm.RealmResults;
+
+import static com.afolayan.alc.cryptocompare.helper.AppHelper.CRYPTO_ID;
 
 
 public class MainFragment extends Fragment {
@@ -124,7 +121,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onCurrencyItemClicked(CryptoList currency) {
                 Intent intent = new Intent(getActivity(), ConverterActivity.class);
-                intent.putExtra("CRYPTO_ID", currency.getID());
+                intent.putExtra(CRYPTO_ID, currency.getID());
                 startActivity(intent);
             }
         });

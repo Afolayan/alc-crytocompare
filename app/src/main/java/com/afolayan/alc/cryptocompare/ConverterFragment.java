@@ -1,10 +1,9 @@
 package com.afolayan.alc.cryptocompare;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
@@ -27,6 +24,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmList;
+
+import static com.afolayan.alc.cryptocompare.helper.AppHelper.CRYPTO_ID;
+import static com.afolayan.alc.cryptocompare.helper.AppHelper.getDate;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -43,14 +43,12 @@ public class ConverterFragment extends Fragment {
     @Bind(R.id.et_currency_to) EditText etCurrencyTo;
 
     @Bind(R.id.tv_currency_name) TextView tvCurrencyName;
-//    @Bind(R.id.tv_crypto_type) TextView tvCryptoType;
     @Bind(R.id.tv_last_market) TextView tvLastMarket;
     @Bind(R.id.tv_last_update) TextView tvLastUpdate;
     @Bind(R.id.tv_icon_1) TextView tvIcon1;
     @Bind(R.id.tv_icon_2) TextView tvIcon2;
     CryptoCurrency cryptoCurrency;
     CryptoList thisCrypto;
-    private Realm realm;
     RealmList<CryptoCurrency> currencies;
     double conversionIndex;
 
@@ -62,11 +60,11 @@ public class ConverterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_converter, container, false);
 
-        String cryptoId = getActivity().getIntent().getStringExtra("CRYPTO_ID");
+        String cryptoId = getActivity().getIntent().getStringExtra(CRYPTO_ID);
 
         ButterKnife.bind(this, view);
 
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
 
         ArrayList<String> labels = new ArrayList<>();
         labels.add("ETH");
@@ -126,7 +124,7 @@ public class ConverterFragment extends Fragment {
     }
 
     private void switchCrypto(int position) {
-        String currencyName, cryptoType,
+        String currencyName,
                 lastUpdate, lastMarket,
                 fromSymbol, toSymbol;
 
@@ -145,15 +143,14 @@ public class ConverterFragment extends Fragment {
         //cryptoType = cryptoCurrency.getType();
 
         long lastUpdated = cryptoCurrency.getLastUpdate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, YYYY", Locale.UK);
-        lastUpdate = dateFormat.format( new Date(lastUpdated) );
+        Date date = new Date(lastUpdated);
+        lastUpdate = getDate(date);
 
         lastMarket = cryptoCurrency.getLastmarket();
         fromSymbol = cryptoCurrency.getFromSymbolIcon();
         toSymbol = cryptoCurrency.getToSymbolIcon();
 
         tvCurrencyName.setText(currencyName);
-        //tvCryptoType.setText( cryptoType );
         tvLastMarket.setText(String.format("%s %s", getString(R.string.market), lastMarket));
         tvLastUpdate.setText(String.format("%s %s", getString(R.string.last_updated), lastUpdate));
         tvIcon1.setText( fromSymbol );
