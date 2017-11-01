@@ -11,7 +11,7 @@
             android:width="0.5dp"
             android:color="@color/darkGray"/>
         <corners
-            android:radius="4dp"/>
+            android:radius="1dp"/>
     </shape>
 </item>
 </selector>

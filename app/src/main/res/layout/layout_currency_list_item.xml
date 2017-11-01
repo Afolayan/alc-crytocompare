@@ -8,7 +8,7 @@
         android:id="@+id/single_currency_card"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="65dp">
 
         <RelativeLayout
             android:layout_margin="5dp"
@@ -27,6 +27,7 @@
                     android:id="@+id/txt_currency_name"
                     android:textAllCaps="true"
                     android:text="USD"
+                    android:textColor="@color/my_black"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"

@@ -12,6 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         app:titleTextColor="@color/blue"
+        app:navigationIcon="@drawable/ic_keyboard_backspace_24dp"
         app:title="@string/title_activity_converter"
         android:textAlignment="gravity"
         android:elevation="3dp"

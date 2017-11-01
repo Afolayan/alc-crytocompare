@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="20dp"
+    android:paddingTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.afolayan.alc.cryptocompare.ConverterFragment"
@@ -11,6 +12,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_margin="@dimen/ten_dp"
+        android:layout_gravity="clip_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,12 +24,14 @@
             android:fontFamily="@font/roboto_slab_light"
             android:gravity="center"
             android:textSize="22sp"
+            android:layout_margin="5dp"
             android:textStyle="normal" />
 
         <belka.us.androidtoggleswitch.widgets.ToggleSwitch
             android:layout_marginTop="@dimen/ten_dp"
             android:id="@+id/toggle_switch"
             android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -38,6 +42,7 @@
             android:fontFamily="sans-serif"
             android:textStyle="normal"
             android:textSize="18sp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
@@ -47,6 +52,7 @@
             android:layout_height="20dp"
             android:fontFamily="@font/roboto_slab_light"
             android:gravity="center"
+            android:layout_margin="5dp"
             android:textSize="18sp"
             android:textStyle="normal" />
 
@@ -67,6 +73,7 @@
                 android:orientation="horizontal"
                 android:id="@+id/currency_1_layout"
                 android:weightSum="1"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -75,8 +82,8 @@
                     android:background="@drawable/transparent_bg_fill"
                     android:textColor="@color/white"
                     android:layout_gravity="start"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
                     android:gravity="center_vertical"
                     android:layout_width="30dp"
                     android:textStyle="bold"
@@ -109,6 +116,7 @@
                 android:id="@+id/currency_2_layout"
                 android:layout_below="@+id/currency_1_layout"
                 android:weightSum="1"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
