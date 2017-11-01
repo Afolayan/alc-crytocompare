@@ -23,13 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/large_text"
-            android:textAlignment="center"
-            android:text="@string/app_name"
-            android:textSize="30sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"

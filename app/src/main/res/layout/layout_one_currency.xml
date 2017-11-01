@@ -2,14 +2,14 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/single_currency_card"
-    android:elevation="3dp"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="5dp"
     android:layout_margin="10dp"
-    android:padding="10dp"
+    android:background="@drawable/transparent_bg"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -40,8 +40,8 @@
                         android:id="@+id/btn_remove_card"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
 
@@ -51,7 +51,7 @@
 
             <View
                 android:id="@+id/view_layout"
-                android:background="@color/blue"
+                android:background="@color/light_blue"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/header_layout"
                 android:layout_marginTop="5dp"
@@ -87,6 +87,7 @@
                             android:gravity="center_horizontal"
                             android:textSize="22sp"
                             android:textStyle="bold"
+                            android:textColor="@color/my_black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -129,6 +130,7 @@
                             android:textAllCaps="true"
                             android:text="ETH"
                             android:gravity="center_horizontal"
+                            android:textColor="@color/my_black"
                             android:textSize="22sp"
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
@@ -158,7 +160,7 @@
 
             <View
                 android:id="@+id/second_view_layout"
-                android:background="@color/blue"
+                android:background="@color/light_blue"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/content_layout"
                 android:layout_marginTop="5dp"
@@ -167,8 +169,9 @@
             <LinearLayout
                 android:id="@+id/footer_layout"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
+                android:paddingTop="5dp"
                 android:layout_below="@+id/second_view_layout"
+                android:background="@color/light_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -182,7 +185,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Last Updated: "
+                        android:text="@string/last_updated"
+                        android:textColor="@color/my_black"
                         android:textSize="16sp"
                         android:textStyle="normal" />
 
@@ -192,6 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/txt_last_updated_text"
                         android:textSize="16sp"
+                        android:textColor="@color/my_black"
                         android:textStyle="normal" />
                 </RelativeLayout>
             </LinearLayout>
