@@ -171,7 +171,7 @@
                 android:orientation="vertical"
                 android:paddingTop="5dp"
                 android:layout_below="@+id/second_view_layout"
-                android:background="@color/light_blue"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

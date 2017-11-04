@@ -36,8 +36,11 @@ public class AppHelper {
             if( minutes > 1 ) buffer.append(minutes).append(" mins ");
         }
         if( seconds != 0 ){
-            if( seconds == 1) buffer.append("1 second");
+            if( seconds == 1) buffer.append("1 second ");
             if( seconds > 1 ) buffer.append(seconds).append(" seconds ");
+        }
+        if( buffer.length() == 0 ){
+            return "Just Now";
         }
 
         buffer.append("ago");

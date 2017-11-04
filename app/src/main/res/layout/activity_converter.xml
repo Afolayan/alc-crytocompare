@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.afolayan.alc.cryptocompare.ConverterActivity">
+    tools:context="com.afolayan.alc.cryptocompare.ui.ConverterActivity">
 
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:titleTextColor="@color/blue"
         app:navigationIcon="@drawable/ic_keyboard_backspace_24dp"
         app:title="@string/title_activity_converter"
         android:textAlignment="gravity"
         android:elevation="3dp"
+        app:titleTextColor="@color/white"
+        android:background="@color/colorPrimary"
         android:layout_height="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
@@ -23,7 +24,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment"
-        android:name="com.afolayan.alc.cryptocompare.ConverterFragment"
+        android:name="com.afolayan.alc.cryptocompare.ui.ConverterFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

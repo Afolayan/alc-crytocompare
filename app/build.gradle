@@ -16,7 +16,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -46,9 +52,8 @@ dependencies {
     compile 'io.realm:android-adapters:2.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'us.belka:androidtoggleswitch:1.2.2'
-    compile 'agency.tango.android:material-intro-screen:0.0.5'
     testCompile 'junit:junit:4.12'
 }
 realm {
-    syncEnabled = true;
+    syncEnabled = true
 }

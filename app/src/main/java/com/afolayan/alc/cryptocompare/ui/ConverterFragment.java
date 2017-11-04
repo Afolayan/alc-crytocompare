@@ -1,4 +1,4 @@
-package com.afolayan.alc.cryptocompare;
+package com.afolayan.alc.cryptocompare.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afolayan.alc.cryptocompare.R;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;

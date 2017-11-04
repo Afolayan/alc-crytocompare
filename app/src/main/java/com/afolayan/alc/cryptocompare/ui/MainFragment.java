@@ -1,21 +1,21 @@
-package com.afolayan.alc.cryptocompare;
+package com.afolayan.alc.cryptocompare.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afolayan.alc.cryptocompare.R;
 import com.afolayan.alc.cryptocompare.adapter.RecyclerAdapter;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
@@ -26,13 +26,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-
-import static com.afolayan.alc.cryptocompare.helper.AppHelper.CRYPTO_ID;
 
 
 public class MainFragment extends Fragment {
@@ -43,12 +40,17 @@ public class MainFragment extends Fragment {
     @Bind(R.id.currency_recycler)
     RecyclerView currencyRecyclerView;
 
+    @Bind(R.id.no_currency)
+    TextView tvNoCurrency;
+
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private Realm realm;
-    private OrderedRealmCollectionChangeListener<RealmResults<CryptoList>> changeListener;
+
     private RecyclerAdapter recyclerAdapter;
     private RealmResults<CryptoList> mList;
+    private LinearLayoutManager linearLayoutManager;
+    private RealmChangeListener<RealmResults<CryptoList>> changeListener;
 
 
     public MainFragment() {
@@ -93,40 +95,34 @@ public class MainFragment extends Fragment {
         });
 
         mList = realm.where(CryptoList.class).findAll();
-        if( mList.size() == 0 )
-            view.findViewById(R.id.no_currency).setVisibility(View.VISIBLE);
-        else
-            view.findViewById(R.id.no_currency).setVisibility(View.GONE);
 
-        changeListener = new OrderedRealmCollectionChangeListener<RealmResults<CryptoList>>() {
+        linearLayoutManager =
+                new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false);
+        changeListener = new RealmChangeListener<RealmResults<CryptoList>>() {
             @Override
-            public void onChange(RealmResults<CryptoList> collection, OrderedCollectionChangeSet changeSet) {
-                changeSet.getInsertions();
-                recyclerAdapter = new RecyclerAdapter(collection);
+            public void onChange(RealmResults<CryptoList> mList) {
+                loadList(mList, linearLayoutManager);
             }
         };
         mList.addChangeListener(changeListener);
 
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(getActivity(), OrientationHelper.VERTICAL, false);
-        GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
-        recyclerAdapter = new RecyclerAdapter(mList);
         currencyRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        loadList(mList, linearLayoutManager);
 
-        currencyRecyclerView.setLayoutManager( linearLayoutManager);
-
-        currencyRecyclerView.setAdapter(recyclerAdapter);
-
-        recyclerAdapter.setOnCurrencyClicked(new RecyclerAdapter.OnCurrencyClicked() {
-            @Override
-            public void onCurrencyItemClicked(CryptoList currency) {
-                Intent intent = new Intent(getActivity(), ConverterActivity.class);
-                intent.putExtra(CRYPTO_ID, currency.getID());
-                startActivity(intent);
-            }
-        });
 
         return view;
+    }
+
+    private void loadList(RealmResults<CryptoList> mList, LinearLayoutManager linearLayoutManager) {
+        recyclerAdapter = new RecyclerAdapter(mList);
+        currencyRecyclerView.setLayoutManager(linearLayoutManager);
+        currencyRecyclerView.setAdapter(recyclerAdapter);
+
+        if( mList.size() > 0 ) {
+            tvNoCurrency.setVisibility(View.GONE);
+        } else{
+            tvNoCurrency.setVisibility(View.VISIBLE);
+        }
     }
 
     private void refreshViews() {
@@ -185,7 +181,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        RealmResults<CryptoList> mList = realm.where(CryptoList.class).findAll();
-        recyclerAdapter = new RecyclerAdapter(mList);
+
+
     }
 }

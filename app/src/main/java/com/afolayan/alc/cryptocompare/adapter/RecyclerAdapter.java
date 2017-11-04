@@ -1,6 +1,7 @@
 package com.afolayan.alc.cryptocompare.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.afolayan.alc.cryptocompare.R;
 import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
 import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
+import com.afolayan.alc.cryptocompare.ui.ConverterActivity;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,7 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmList;
 
+import static com.afolayan.alc.cryptocompare.helper.AppHelper.CRYPTO_ID;
 import static com.afolayan.alc.cryptocompare.helper.AppHelper.getDate;
 
 /**
@@ -34,17 +37,8 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
     private List<CryptoList> mList;
     public static final String TAG = RecyclerAdapter.class.getSimpleName();
 
-    View view;
-    Context context;
-    private OnCurrencyClicked onCurrencyClicked;
-
-    public OnCurrencyClicked getOnCurrencyClicked() {
-        return onCurrencyClicked;
-    }
-
-    public void setOnCurrencyClicked(OnCurrencyClicked onCurrencyClicked) {
-        this.onCurrencyClicked = onCurrencyClicked;
-    }
+    private View view;
+    private Context context;
 
     public RecyclerAdapter(List<CryptoList> list){
         this.mList = list;
@@ -107,11 +101,13 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
 
         ((CurrencyHolder) holder).tvLastUpdated.setText(dateToDisplay);
 
-        ((CurrencyHolder) holder).layoutCardView.setOnClickListener(
+        ((CurrencyHolder) holder).itemView.setOnClickListener(
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getOnCurrencyClicked().onCurrencyItemClicked(cryptoList);
+                Intent intent = new Intent(context, ConverterActivity.class);
+                intent.putExtra(CRYPTO_ID, cryptoList.getID());
+                context.startActivity(intent);
             }
         });
 
@@ -179,7 +175,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
                 public void execute(Realm realm) {
                     CryptoList cryptoList = realm.where(CryptoList.class).equalTo("ID", Id)
                             .findFirst();
-                    if( cryptoList != null);
+                    if( cryptoList != null)
                         cryptoList.deleteFromRealm();
                 }
             }, new Realm.Transaction.OnSuccess() {
@@ -197,9 +193,5 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<CryptoList> {
     }
 
 
-
-    public interface OnCurrencyClicked{
-        void onCurrencyItemClicked(CryptoList cryptoList);
-    }
 
 }

@@ -6,7 +6,7 @@
     android:paddingTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.afolayan.alc.cryptocompare.ConverterFragment"
+    tools:context="com.afolayan.alc.cryptocompare.ui.ConverterFragment"
     tools:showIn="@layout/activity_converter">
 
     <LinearLayout
@@ -21,7 +21,6 @@
             android:id="@+id/tv_currency_name"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:fontFamily="@font/roboto_slab_light"
             android:gravity="center"
             android:textSize="22sp"
             android:layout_margin="5dp"
@@ -50,7 +49,6 @@
             android:id="@+id/tv_last_update"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:fontFamily="@font/roboto_slab_light"
             android:gravity="center"
             android:layout_margin="5dp"
             android:textSize="18sp"

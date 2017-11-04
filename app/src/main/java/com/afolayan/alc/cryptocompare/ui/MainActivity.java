@@ -1,10 +1,10 @@
-package com.afolayan.alc.cryptocompare;
+package com.afolayan.alc.cryptocompare.ui;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -16,9 +16,11 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
+import com.afolayan.alc.cryptocompare.R;
 import com.afolayan.alc.cryptocompare.adapter.NewCurrencyAdapter;
+import com.afolayan.alc.cryptocompare.model.CryptoCurrency;
+import com.afolayan.alc.cryptocompare.model.CryptoList;
 import com.afolayan.alc.cryptocompare.model.Currency;
 import com.afolayan.alc.cryptocompare.rest.APIController;
 
@@ -26,6 +28,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.OnFragmentInteractionListener{
@@ -113,25 +118,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void workWithSelected(Currency currency) {
-        /**
-         * 1. Get selected currency bitcoin exchange rate
-         * 2. Save value against currency name
-         * 3. Create card for selected currency
-         */
-        getCurrencyBitcoin(currency.getCode());
-    }
-
-    private void getCurrencyBitcoin(String currencyCode) {
         View dialogView = getLayoutInflater().inflate(R.layout.layout_progress_dialog, null);
-        ProgressBar progressBar = (ProgressBar) dialogView.findViewById(R.id.progress_bar);
 
+        if(isCurrencyAdded(currency.getCode())){
+            Snackbar.make(addNewCurrencyFab,
+                    "This currency has already been added. You can refresh to get updates.",
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this)
                 .setView(dialogView);
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.show();
         APIController controller = new APIController();
-        controller.start(currencyCode, alertDialog);
+        controller.start(currency.getCode(), alertDialog);
+    }
 
+    private boolean isCurrencyAdded(String code) {
+        RealmResults<CryptoList> mList = Realm.getDefaultInstance()
+                .where(CryptoList.class).findAll();
+        for( CryptoList cryptoList: mList){
+            RealmList<CryptoCurrency> currencies = cryptoList.getCryptoCurrencies();
+            if( code.equalsIgnoreCase( currencies.get(0).getToSymbol()) ){
+                return true;
+            }
+        }
+        return false;
     }
 
 

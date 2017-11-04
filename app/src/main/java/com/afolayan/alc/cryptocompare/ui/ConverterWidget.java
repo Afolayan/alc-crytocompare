@@ -1,9 +1,11 @@
-package com.afolayan.alc.cryptocompare;
+package com.afolayan.alc.cryptocompare.ui;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+
+import com.afolayan.alc.cryptocompare.R;
 
 /**
  * Implementation of App Widget functionality.
